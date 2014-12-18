@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <package name="MyInterceptor" extends="struts-default,json-default" namespace="/inter" abstract="true">
+
+        <interceptors><!--定义拦截器-->
+            <!--配置拦截器栈-->
+            <interceptor-stack name="mystack">
+                <interceptor-ref name="json"></interceptor-ref>
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="mystack"></default-interceptor-ref>
+    </package>
+
+    <package name="test" extends="struts-default,json-default" namespace="/test">
+
+        <action name="test" class="com.shinowit.action.MenuTreeAction" method="showTree">
+            <result type="json">
+                <!--<param name="includeProperties">root.*.children</param>-->
+            </result>
+        </action>
+
+    </package>
+
+    <!--登录员-->
+    <package name="login" extends="struts-default,json-default" namespace="/login">
+
+        <action name="login" class="com.shinowit.action.LoginAction" method="login">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state</param>
+            </result>
+        </action>
+
+    </package>
+
+    <!--入库包-->
+    <package name="inStock" extends="struts-default,json-default" namespace="/inStock">
+        <action name="inStock" class="com.shinowit.action.InStockController" method="insert">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state</param>
+            </result>
+        </action>
+
+        <action name="showInStockList" class="com.shinowit.action.InStockAction" method="showInStockList">
+            <result name="ok" type="json">
+                <param name="includeProperties">inStockRootList.*</param>
+            </result>
+        </action>
+
+        <action name="showDetailByInStockId" class="com.shinowit.action.InStockDetailAction"
+                method="showDetailByInStockId">
+            <result name="ok" type="json">
+                <param name="includeProperties">inStockDetailList.*</param>
+            </result>
+        </action>
+
+        <action name="updateInStockDetail" class="com.shinowit.action.InStockController" method="update">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state</param>
+            </result>
+        </action>
+
+        <action name="deleteInStock" class="com.shinowit.action.InStockController" method="delete">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state</param>
+            </result>
+        </action>
+
+
+    </package>
+
+    <!-- 出库包-->
+    <package name="outStock" extends="struts-default,json-default" namespace="/outStock">
+        <action name="outStock" class="com.shinowit.action.OutStockController" method="insert">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state</param>
+            </result>
+        </action>
+
+        <action name="showOutStockList" class="com.shinowit.action.OutStockAction" method="showOutStockList">
+            <result name="ok" type="json">
+                <param name="includeProperties">outStockList.*</param>
+            </result>
+        </action>
+
+        <action name="showDetailByOutStockId" class="com.shinowit.action.OutStockDetailAction"
+                method="showDetailByOutStockId">
+            <result name="ok" type="json">
+                <param name="includeProperties">outStockDetailList.*</param>
+            </result>
+        </action>
+
+        <action name="deleteOutStock" class="com.shinowit.action.OutStockController" method="delete">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state</param>
+            </result>
+        </action>
+
+        <action name="updateOutStockDetail" class="com.shinowit.action.OutStockController" method="update">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state</param>
+            </result>
+        </action>
+    </package>
+
+    <!--查询库存信息-->
+    <package name="ProductStock" extends="struts-default,json-default" namespace="/sys">
+
+        <action name="queryProductStockById" class="com.shinowit.action.ProductStockAction" method="queryById">
+            <result name="ok" type="json">
+                <!--<param name="includeProperties">productStock.avgPrice,productStock.num</param>-->
+                <!--<param name="excludeProperties">productStock.*.productByProductCode</param>-->
+            </result>
+        </action>
+
+    </package>
+
+    <!--数据源专用-->
+    <package name="forStore" extends="struts-default,json-default" namespace="/sys">
+
+        <action name="showProductStockList" class="com.shinowit.action.QueryForStoreAction"
+                method="showProductStockList">
+            <result name="ok" type="json">
+                <param name="includeProperties">productStockList.*</param>
+            </result>
+        </action>
+
+        <action name="showTypeNameList" class="com.shinowit.action.QueryForStoreAction" method="showTypeNameList">
+            <result name="ok" type="json">
+                <param name="includeProperties">typeNameList.*</param>
+            </result>
+        </action>
+
+        <action name="showStatusList" class="com.shinowit.action.QueryForStoreAction" method="showStatusList">
+            <result name="ok" type="json">
+                <param name="includeProperties">productSaleStatusList.*</param>
+            </result>
+        </action>
+
+        <action name="showUnitList" class="com.shinowit.action.QueryForStoreAction" method="showUnitList">
+            <result name="ok" type="json">
+                <param name="includeProperties">productUnitList.*</param>
+            </result>
+        </action>
+
+        <action name="showDeliveryInfoList" class="com.shinowit.action.QueryForStoreAction"
+                method="showDeliveryInfoList">
+            <result name="ok" type="json">
+                <param name="includeProperties">deliveryInfoList.*</param>
+            </result>
+        </action>
+
+        <action name="showSysUserList" class="com.shinowit.action.QueryForStoreAction" method="showSysUserList">
+            <result name="ok" type="json">
+                <param name="includeProperties">sysUserList.*</param>
+            </result>
+        </action>
+
+        <action name="showProviderList" class="com.shinowit.action.QueryForStoreAction" method="showProviderList">
+            <result name="ok" type="json">
+                <param name="includeProperties">providerList.*</param>
+            </result>
+        </action>
+
+        <action name="showProductList" class="com.shinowit.action.QueryForStoreAction" method="showProductList">
+            <result name="ok" type="json">
+                <param name="includeProperties">productList.*</param>
+            </result>
+        </action>
+    </package>
+
+    <!--package for SysMenuList  菜单表-->
+    <package name="SysMenuList" extends="struts-default,json-default" namespace="/sys">
+        <action name="showMenuGroup" class="com.shinowit.action.SysMenuListAction" method="showMenuGroup">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state,sysMenuList.*</param>
+            </result>
+        </action>
+
+        <action name="showSysMenu" class="com.shinowit.action.SysMenuEntityAction" method="showSysMenu">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state,sysMenuEntityList.*</param>
+            </result>
+        </action>
+
+    </package>
+
+    <!--package for ProductSaleStatus  商品促销字典表-->
+    <package name="ProductSaleStatus" extends="struts-default,json-default" namespace="/sys">
+
+        <action name="showProductSaleStatusRootList" class="com.shinowit.action.ProductSaleStatusAction"
+                method="showRootList">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+                <param name="excludeProperties">rootList.*.productsByStatusId</param>
+            </result>
+        </action>
+
+        <action name="saveProductSaleStatus" class="com.shinowit.action.ProductSaleStatusAction" method="save">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state</param>
+                <param name="excludeProperties">rootList.*</param>
+            </result>
+        </action>
+
+        <action name="deleteProductSaleStatus" class="com.shinowit.action.ProductSaleStatusAction" method="delete">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message</param>
+                <param name="excludeProperties">rootList.*</param>
+            </result>
+        </action>
+
+        <action name="updataProductSaleStatus" class="com.shinowit.action.ProductSaleStatusAction" method="updata">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message</param>
+                <param name="excludeProperties">rootList.*</param>
+            </result>
+        </action>
+
+    </package>
+
+    <!--package for ProductType  商品类别字典表-->
+    <package name="ProductType" extends="struts-default,json-default" namespace="/sys">
+
+        <action name="showProductTypeRootList" class="com.shinowit.action.ProductTypeAction" method="showRootList">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+
+        <action name="saveProductType" class="com.shinowit.action.ProductTypeAction" method="save">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+
+        <action name="updataProductType" class="com.shinowit.action.ProductTypeAction" method="updata">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+
+        <action name="deleteProductType" class="com.shinowit.action.ProductTypeAction" method="delete">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,state</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+    </package>
+
+    <!--package for ProductUnit  商品单位字典表-->
+    <package name="ProductUnit" extends="struts-default,json-default" namespace="/sys">
+
+        <action name="showProductUnitRootList" class="com.shinowit.action.ProductUnitAction" method="showRootList">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+
+        <action name="saveProductUnit" class="com.shinowit.action.ProductUnitAction" method="save">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+
+        <action name="deleteProductUnit" class="com.shinowit.action.ProductUnitAction" method="delete">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+
+        <action name="updataProductUnit" class="com.shinowit.action.ProductUnitAction" method="updata">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+    </package>
+
+    <!--package for SysRole  角色分类字典表-->
+    <package name="SysRole" extends="struts-default,json-default" namespace="/sys">
+        <action name="showSysRoleRootList" class="com.shinowit.action.SysRoleAction" method="showRootList">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+
+        <action name="saveSysRole" class="com.shinowit.action.SysRoleAction" method="save">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+
+        <action name="endSysRole" class="com.shinowit.action.SysRoleAction" method="endSysRole">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+
+        <action name="startSysRole" class="com.shinowit.action.SysRoleAction" method="startSysRole">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+
+        <action name="updataSysRole" class="com.shinowit.action.SysRoleAction" method="updata">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+                <!--<param name="excludeProperties"></param>-->
+            </result>
+        </action>
+
+    </package>
+
+    <!--package for Product  商品信息字典表-->
+    <package name="Product" extends="struts-default,json-default" namespace="/sys">
+        <action name="showProductRootList" class="com.shinowit.action.ProductAction" method="showRootList">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+            </result>
+        </action>
+
+        <action name="saveProduct" class="com.shinowit.action.ProductAction" method="save">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+            </result>
+        </action>
+
+        <action name="deleteProduct" class="com.shinowit.action.ProductAction" method="delete">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+            </result>
+        </action>
+
+        <action name="updataProduct" class="com.shinowit.action.ProductAction" method="updata">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,message,count,rootList.*</param>
+            </result>
+        </action>
+
+    </package>
+
+    <!-- 人员管理-->
+    <package name="SysUser" extends="struts-default,json-default" namespace="/person">
+
+        <action name="showSysUserRootList" class="com.shinowit.action.SysUserAction" method="showSysUserRootList">
+            <result name="ok" type="json">
+                <param name="includeProperties">sysUserRootList.*</param>
+            </result>
+        </action>
+
+        <action name="saveSysUser" class="com.shinowit.action.SysUserAction" method="saveSysUser">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,state,message</param>
+            </result>
+        </action>
+
+        <action name="updateSysUser" class="com.shinowit.action.SysUserAction" method="updateSysUser">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,state,message</param>
+            </result>
+        </action>
+
+        <action name="deleteSysUser" class="com.shinowit.action.SysUserAction" method="deleteSysUser">
+            <result name="ok" type="json">
+                <param name="includeProperties">success,state,message</param>
+            </result>
+        </action>
+
+    </package>
+
+    <!--供应商-->
+    <package name="provider" extends="struts-default,json-default" namespace="/person">
+        <action name="showProviderList" class="com.shinowit.action.ProviderAction" method="showProviderList">
+            <result name="ok" type="json">
+
+            </result>
+        </action>
+
+        <action name="saveProvider" class="com.shinowit.action.ProviderAction" method="saveProvider">
+            <result name="ok" type="json">
+
+            </result>
+        </action>
+
+        <action name="updateProvider" class="com.shinowit.action.ProviderAction" method="updateProvider">
+            <result name="ok" type="json">
+
+            </result>
+        </action>
+
+        <action name="deleteProvider" class="com.shinowit.action.ProviderAction" method="deleteProvider">
+            <result name="ok" type="json">
+
+            </result>
+        </action>
+    </package>
+
+    <!--权限修改-->
+    <package name="menuRole" extends="MyInterceptor" namespace="/person">
+        <action name="showMenuRole" class="com.shinowit.action.MenuRoleTreeAction" method="showMenuRole">
+            <result name="ok" type="json">
+
+            </result>
+        </action>
+        <action name="updateMenuRole" class="com.shinowit.action.MenuRoleTreeAction" method="updateMenuRole">
+            <result name="ok" type="json">
+
+            </result>
+        </action>
+    </package>
+
+
+</struts>
